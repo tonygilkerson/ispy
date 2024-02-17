@@ -49,3 +49,11 @@ root@kind-worker:/# crictl images
 helm upgrade -i ispy charts/ispy
 open http://ispy.127.0.0.1.nip.io:8080/
 ```
+
+## Release
+
+To release
+
+* push changes to main make sure the CI works
+* add a semver tag to main
+* 
