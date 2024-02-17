@@ -6,7 +6,7 @@ NOW := $(shell echo "`date +%Y-%m-%d`")
 define help_info
 	@echo "\nUsage:\n"
 	@echo ""
-	@echo "  $$ make test       - Run all KUTTL tests locally, this will create a kwok-cluster"
+	@echo "  $$ make setVersion version=9.9.9     - Used to set the version number."
 	@echo ""
 
 
@@ -15,8 +15,11 @@ endef
 help:
 	$(call help_info)
 
-# export KUBECONFIG := ./testing/kwok-kubeconfig.yaml
-ociBuild:
-	podman build . --file Dockerfile --tag ispy:dev
 
-	
+setVersion:
+	@echo Set version "$(version)";\
+	ver="v$(version)" yq e '.tag = strenv(ver)' ./charts/ispy/values.yaml --inplace;\
+	ver="v$(version)" yq e '.version = strenv(ver)' ./charts/ispy/Chart.yaml  --inplace;\
+	ver="v$(version)" yq e '.appVersion = strenv(ver)' ./charts/ispy/Chart.yaml  --inplace;
+
+

@@ -16,7 +16,7 @@ spec:
         app: ispy
     spec:
       containers:
-        - image: "{{ .Values.image }}:{{ .Values.tag }}"
+        - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: ispy
           resources:
             requests:
