@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
+</head>
+
+<body>
+  <h1>{{ .Heading }}</h1>
+  <button hx-get="/say-hi-response" hx-swap="#data-container">Press to say hi</button>
+  <div id="data-container"></div>
+</body>
+</html>
