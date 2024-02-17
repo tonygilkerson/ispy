@@ -1,4 +1,4 @@
 image:
   # repository: localhost/ispy # Ues this for local testing
   repository: ghcr.io/tonygilkerson/ispy
-  tag: v1.0.0
+  tag: v1.0.2
