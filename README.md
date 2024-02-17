@@ -46,7 +46,7 @@ core@localhost:~$  podman exec -it kind-worker /bin/bash
 root@kind-worker:/# crictl images  
 
 # Deploy and verify
-helm upgrade -i ispy charts/ispy
+helm upgrade -i ispy charts/ispy --set image=localhost/ispy --set tag=dev
 open http://ispy.127.0.0.1.nip.io:8080/
 ```
 
@@ -57,3 +57,6 @@ To release
 * push changes to main make sure the CI works
 * add a semver tag to main
 * x
+
+go install github.com/jfwenisch/semver-cli@latest
+export PATH=/Users/tgilkerson/go/bin:$PATH
