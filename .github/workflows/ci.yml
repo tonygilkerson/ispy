@@ -44,8 +44,8 @@ jobs:
                                   # for semantic-release when using
                                   # semantic-release-action lower than @v3
       env:
-        GITHUB_TOKEN: ${{ secrets.AEG_ADMIN }}
-        GH_TOKEN: ${{ secrets.AEG_ADMIN }}
+        GITHUB_TOKEN: ${{ secrets.AEG_CI }}
+        GH_TOKEN: ${{ secrets.AEG_CI }}
 
     - name: Semantic Release Version
       if: steps.semantic.outputs.new_release_published == 'true'
@@ -58,7 +58,7 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.AEG_ADMIN }}
+        password: ${{ secrets.AEG_CI }}
 
     - name: Build and Push Container Image
       if: steps.semantic.outputs.new_release_published == 'true'

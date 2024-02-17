@@ -18,7 +18,7 @@ help:
 
 setVersion:
 	@echo Set version "$(version)";\
-	ver="v$(version)" yq e '.tag = strenv(ver)' ./charts/ispy/values.yaml --inplace;\
+	ver="v$(version)" yq e '.image.tag = strenv(ver)' ./charts/ispy/values.yaml --inplace;\
 	ver="v$(version)" yq e '.version = strenv(ver)' ./charts/ispy/Chart.yaml  --inplace;\
 	ver="v$(version)" yq e '.appVersion = strenv(ver)' ./charts/ispy/Chart.yaml  --inplace;
 
