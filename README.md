@@ -21,8 +21,8 @@ podman machine init --cpus=4 --memory=4000 // adjust resources as needed
 podman build -t ispy:dev .
 
 # Run
-podman run -it --rm -p 8080:8080 localhost/ispy:dev 
-open http://localhost:8080/
+podman run -it --rm -p 8081:8080 localhost/ispy:dev 
+open http://localhost:8081/
 ```
 
 ## Testing with kind cluster
@@ -74,6 +74,7 @@ kubectl -n ingress-nginx scale deployment ingress-nginx-controller --replicas=1
 
 ```sh
 # Deploy and verify
-helm upgrade -i ispy charts/ispy --set image.repository=localhost/ispy --set image.tag=dev --set ingressClassName=nginx --set domain=127.0.0.1.nip.io 
+kubectl create ns ispy
+helm -n ispy upgrade -i ispy charts/ispy --set image.repository=localhost/ispy --set ingressClassName=nginx --set domain=127.0.0.1.nip.io --set image.tag=dev
 open https://ispy.127.0.0.1.nip.io:8443/
 ```

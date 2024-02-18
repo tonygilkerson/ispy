@@ -2,6 +2,7 @@
 domain: tonygilkerson.us
 # ingressClassName: nginx # Use for local testing
 ingressClassName: public
+
 image:
   # repository: localhost/ispy # Ues for local testing
   repository: ghcr.io/tonygilkerson/ispy

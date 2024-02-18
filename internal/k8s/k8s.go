@@ -11,6 +11,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
@@ -25,22 +26,32 @@ func GetClientSet() *kubernetes.Clientset {
 	}
 
 	var clientset *kubernetes.Clientset
+	var kubeConfig *rest.Config
+	var err error
 
 	if inCluster == "true" {
-		log.Println("TODO make inCluster clientset")
+		log.Println("Creating an in cluster go-client config")
+		kubeConfig, err = rest.InClusterConfig()
+		
+		if err != nil {
+			// panic(err.Error())
+			log.Printf("NOT GOOD: %v\n", err.Error())
+		}		
+		
 	} else {
+		log.Panicln("Creating go-client config from user homedir")
 		userHomeDir, err := os.UserHomeDir()
 		util.DoOrDie(err)
 
 		kubeConfigPath := filepath.Join(userHomeDir, ".kube", "config")
 		fmt.Printf("Using kubeconfig: %s\n", kubeConfigPath)
 
-		kubeConfig, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
-		util.DoOrDie(err)
-
-		clientset, err = kubernetes.NewForConfig(kubeConfig)
+		kubeConfig, err = clientcmd.BuildConfigFromFlags("", kubeConfigPath)
 		util.DoOrDie(err)
 	}
+	
+	clientset, err = kubernetes.NewForConfig(kubeConfig)
+	util.DoOrDie(err)
 
 	return clientset
 }

@@ -15,6 +15,7 @@ spec:
       labels:
         app: ispy
     spec:
+      serviceAccountName: ispy
       securityContext:
         runAsUser: 1000
         runAsGroup: 3000
@@ -23,6 +24,13 @@ spec:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: IfNotPresent
           name: ispy
+          env:
+          - name: ISPY_IN_CLUSTER
+            value: "true"
+          - name: ISPY_SERVER_PORT
+            value: "8080"
+          # - name: ISPY_WWW_ROOT
+          #   value: Let this default to the folder where the bin is running
           resources:
             requests:
               cpu: 32m
