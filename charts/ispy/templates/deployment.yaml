@@ -21,6 +21,7 @@ spec:
         fsGroup: 2000    
       containers:   
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: IfNotPresent
           name: ispy
           resources:
             requests:

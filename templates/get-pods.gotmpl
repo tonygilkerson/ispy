@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>{{ .Heading }}</h1>
+  <p>{{ .Intro }}</p>
+  <ul>
+    {{ range .Pods }}
+    <li>{{ . }}</li>
+    {{ end }}
+  </ul>
+</body>
+</html>

@@ -16,7 +16,7 @@ func main() {
 	// Create Server
 	//
 	mux := http.NewServeMux()
-	svr := &http.Server{Addr: ":8080", Handler: mux}
+	svr := &http.Server{Addr: ":8081", Handler: mux}
 
 	//
 	// Init handler context
@@ -29,6 +29,7 @@ func main() {
 	mux.HandleFunc("/", hctx.HomeHandler)
 	mux.HandleFunc("/say-hi", hctx.SayHiHandler)
 	mux.HandleFunc("/say-hi-response", hctx.SayHiResponseHandler)
+	mux.HandleFunc("/get-pods", hctx.GetPodHandler)
 
 	// For the live and readness probes
 	mux.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {

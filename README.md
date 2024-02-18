@@ -40,6 +40,7 @@ podman build -t ispy:dev .
 podman save -o .temp/ispy.tar localhost/ispy:dev
 kind load image-archive .temp/ispy.tar 
 
+
 # Verify
 # If you want to see the image you just loaded on the kind node
 $ podman machine ssh

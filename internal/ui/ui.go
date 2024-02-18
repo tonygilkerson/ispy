@@ -28,8 +28,4 @@ func NewHandlerContext() *HandlerContext {
 	return &hc
 }
 
-func doOrDie(err error) {
-	if err != nil {
-		log.Panicf("Oops err: %v ", err)
-	}
-}
+

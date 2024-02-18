@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"text/template"
+
+	"github.com/tonygilkerson/ispy/internal/util"
 )
 
 type Home struct {
@@ -28,10 +30,10 @@ func (ctx *HandlerContext) HomeHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Create template from: %v", tmplFile)
 
 		tmplStr, err := os.ReadFile(tmplFile)
-		doOrDie(err)
+		util.DoOrDie(err)
 
 		tmpl, err = template.New("HomePage").Parse(string(tmplStr))
-		doOrDie(err)
+		util.DoOrDie(err)
 
 		ctx.PageTemplates["HomePage"] = tmpl
 	}
