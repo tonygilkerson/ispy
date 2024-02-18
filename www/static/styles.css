@@ -1,0 +1,22 @@
+body {
+  background-color: rgba(103, 67, 130, 0.446);
+  font-family: verdana;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+p {
+  font-family: verdana;
+}
+
+th {
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+

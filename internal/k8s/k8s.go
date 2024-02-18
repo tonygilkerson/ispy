@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/tonygilkerson/ispy/internal/util"
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -16,12 +16,12 @@ import (
 
 func GetClientSet() *kubernetes.Clientset {
 
-	inCluster, exists := os.LookupEnv("IN_CLUSTER")
+	inCluster, exists := os.LookupEnv("ISPY_IN_CLUSTER")
 	if exists {
-		log.Printf("Using environment variable IN_CLUSTER: %v", inCluster)
+		log.Printf("Using environment variable ISPY_IN_CLUSTER: %v", inCluster)
 	} else {
 		inCluster = "false"
-		log.Printf("IN_CLUSTER environment variable not set, using default value: %v", inCluster)
+		log.Printf("ISPY_IN_CLUSTER environment variable not set, using default value: %v", inCluster)
 	}
 
 	var clientset *kubernetes.Clientset
@@ -45,11 +45,8 @@ func GetClientSet() *kubernetes.Clientset {
 	return clientset
 }
 
+func PodListWrapper(clientset *kubernetes.Clientset) {
 
-func PodListWrapper() {
-
-	// Get clientset
-	clientset := GetClientSet()
 
 	// An empty string returns all namespaces
 	namespace := "kube-system"
@@ -77,8 +74,6 @@ func PodListWrapper() {
 	}
 	fmt.Printf("Total namespaces: %d\n", len(namespaces.Items))
 }
-
-
 
 func GetPods(namespace string, client kubernetes.Interface) (*v1.PodList, error) {
 	fmt.Println("Get Kubernetes Pods")

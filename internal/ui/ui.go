@@ -4,28 +4,31 @@ import (
 	"log"
 	"os"
 	"text/template"
+
+	"github.com/tonygilkerson/ispy/internal/k8s"
+	"k8s.io/client-go/kubernetes"
 )
 
 type HandlerContext struct {
-	templateRoot       string
-	PageTemplates map[string]*template.Template
+	wwwRoot  string
+	pageTemplates map[string]*template.Template
+	clientset     *kubernetes.Clientset
 }
 
 func NewHandlerContext() *HandlerContext {
 
-	templateRoot, exists := os.LookupEnv("TEMPLATE_ROOT")
+	wwwRoot, exists := os.LookupEnv("ISPY_WWW_ROOT")
 	if exists {
-		log.Printf("Using environment variable TEMPLATE_ROOT: %v", templateRoot)
+		log.Printf("Using environment variable ISPY_WWW_ROOT: %v", wwwRoot)
 	} else {
-		templateRoot, _ = os.Getwd()
-		log.Printf("TEMPLATE_ROOT environment variable not set, using default value: %v", templateRoot)
+		wwwRoot, _ = os.Getwd()
+		log.Printf("ISPY_WWW_ROOT environment variable not set, using default value: %v", wwwRoot)
 	}
 
 	var hc HandlerContext
-	hc.templateRoot = templateRoot
-	hc.PageTemplates = make(map[string]*template.Template)
+	hc.wwwRoot = wwwRoot
+	hc.pageTemplates = make(map[string]*template.Template)
+	hc.clientset = k8s.GetClientSet()
 
 	return &hc
 }
-
-

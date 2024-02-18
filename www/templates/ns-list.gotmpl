@@ -4,7 +4,7 @@
   <h1>{{ .Heading }}</h1>
   <p>{{ .Intro }}</p>
   <ul>
-    {{ range .Pods }}
+    {{ range .Namespaces }}
     <li>{{ . }}</li>
     {{ end }}
   </ul>

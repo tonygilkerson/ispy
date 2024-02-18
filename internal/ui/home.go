@@ -24,9 +24,9 @@ func (ctx *HandlerContext) HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Reuse template if possible
-	tmpl, exists := ctx.PageTemplates["HomePage"]
+	tmpl, exists := ctx.pageTemplates["HomePage"]
 	if !exists {
-		tmplFile := ctx.templateRoot + "/templates/home.gotmpl"
+		tmplFile := ctx.wwwRoot + "/www/templates/home.gotmpl"
 		log.Printf("Create template from: %v", tmplFile)
 
 		tmplStr, err := os.ReadFile(tmplFile)
@@ -35,7 +35,7 @@ func (ctx *HandlerContext) HomeHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl, err = template.New("HomePage").Parse(string(tmplStr))
 		util.DoOrDie(err)
 
-		ctx.PageTemplates["HomePage"] = tmpl
+		ctx.pageTemplates["HomePage"] = tmpl
 	}
 
 	log.Printf("Execute template: %v", tmpl.Name())

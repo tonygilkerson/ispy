@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+  <h1>{{ .Heading }}</h1>
+  <p>{{ .Intro }}</p>
+  <table>
+    <tr>
+      <th>Pod Name</th>
+    </tr>
+    {{ range .Pods }}
+    <tr>
+      <td>{{ . }}</td>
+    </tr>
+    {{ end }}
+  </table>
+</body>
+
+</html>

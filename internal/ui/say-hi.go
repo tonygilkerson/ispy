@@ -11,7 +11,7 @@ import (
 
 type SayHi struct {
 	Heading string
-	Prompt   string
+	Prompt  string
 }
 
 func (ctx *HandlerContext) SayHiHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,9 +24,9 @@ func (ctx *HandlerContext) SayHiHandler(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// Reuse template if possible
-	tmpl, exists := ctx.PageTemplates["SayHi"]
+	tmpl, exists := ctx.pageTemplates["SayHi"]
 	if !exists {
-		tmplFile := ctx.templateRoot + "/templates/say-hi.gotmpl"
+		tmplFile := ctx.wwwRoot + "/www/templates/say-hi.gotmpl"
 		log.Printf("Create template from: %v", tmplFile)
 
 		tmplStr, err := os.ReadFile(tmplFile)
@@ -35,7 +35,7 @@ func (ctx *HandlerContext) SayHiHandler(w http.ResponseWriter, r *http.Request) 
 		tmpl, err = template.New("SayHi").Parse(string(tmplStr))
 		util.DoOrDie(err)
 
-		ctx.PageTemplates["SayHi"] = tmpl
+		ctx.pageTemplates["SayHi"] = tmpl
 	}
 
 	log.Printf("Execute template: %v", tmpl.Name())

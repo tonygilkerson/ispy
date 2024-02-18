@@ -18,6 +18,6 @@ FROM scratch
 WORKDIR /app
 
 COPY --from=build /build/ispy /app/ispy
-COPY --from=build /build/templates /app/templates
+COPY --from=build /build/www /app/www
 
 ENTRYPOINT ["/app/ispy"]

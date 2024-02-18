@@ -10,43 +10,47 @@ import (
 	"github.com/tonygilkerson/ispy/internal/util"
 )
 
-type GetPods struct {
+type PodList struct {
 	Heading string
 	Intro   string
 	Pods    []string
 }
 
-func (ctx *HandlerContext) GetPodHandler(w http.ResponseWriter, r *http.Request) {
+func (ctx *HandlerContext) PodListHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html;charset=utf-8")
 	w.Header().Set("Cache-Control", "no-store")
 
-	pageValues := GetPods{
+	pageValues := PodList{
 		Heading: "Pods",
 		Intro:   "Below is a list of pods",
-		Pods:    []string{"aaa","bbb","ccc"},
+		Pods:    []string{},
 	}
 
 	// Reuse template if possible
-	tmpl, exists := ctx.PageTemplates["GetPods"]
+	tmpl, exists := ctx.pageTemplates["PodList"]
 	if !exists {
-		tmplFile := ctx.templateRoot + "/templates/get-pods.gotmpl"
+		tmplFile := ctx.wwwRoot + "/www/templates/pod-list.gotmpl"
 		log.Printf("Create template from: %v", tmplFile)
 
 		tmplStr, err := os.ReadFile(tmplFile)
 		util.DoOrDie(err)
 
-		tmpl, err = template.New("GetPods").Parse(string(tmplStr))
+		tmpl, err = template.New("PodList").Parse(string(tmplStr))
 		util.DoOrDie(err)
 
+		ctx.pageTemplates["PodList"] = tmpl
+	}
 
-		ctx.PageTemplates["GetPods"] = tmpl
+	// An empty string returns all namespaces
+	namespace := ""
+	pods, err := k8s.GetPods(namespace, ctx.clientset)
+	util.DoOrDie(err)
+
+	for _, pod := range pods.Items {
+		pageValues.Pods = append(pageValues.Pods, pod.Name)
 	}
 
 	log.Printf("Execute template: %v", tmpl.Name())
 	tmpl.Execute(w, pageValues)
 
-	k8s.PodListWrapper()
-
 }
-
-

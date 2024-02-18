@@ -5,8 +5,9 @@ Iot Spy for viewing cluster side info about my IOT stuff
 ## Local testing
 
 ```sh
+source .env
 go run cmd/ispy/main.go
-open http://localhost:8080/
+open http://localhost:8081/
 ```
 
 ## Testing with containers
@@ -31,7 +32,6 @@ This requires port 8080 to be available on the host.
 
 ```sh
 # Create VM and cluster
-KIND_EXPERIMENTAL_PROVIDER=podman
 podman machine init --cpus=4 --memory=4000 // adjust resources as needed
 kind create cluster --config kind-confg.yaml
 
@@ -39,7 +39,6 @@ kind create cluster --config kind-confg.yaml
 podman build -t ispy:dev . 
 podman save -o .temp/ispy.tar localhost/ispy:dev
 kind load image-archive .temp/ispy.tar 
-
 
 # Verify
 # If you want to see the image you just loaded on the kind node
