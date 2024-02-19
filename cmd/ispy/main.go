@@ -6,9 +6,12 @@ import (
 	"os"
 
 	"github.com/tonygilkerson/ispy/internal/ui"
+
 )
 
 func main() {
+
+	bar.DoSomething()
 
 	// Log to the console with date, time and filename prepended
 	log.SetFlags(log.LstdFlags | log.Lshortfile)

@@ -56,36 +56,6 @@ func GetClientSet() *kubernetes.Clientset {
 	return clientset
 }
 
-func PodListWrapper(clientset *kubernetes.Clientset) {
-
-
-	// An empty string returns all namespaces
-	namespace := "kube-system"
-	pods, err := GetPods(namespace, clientset)
-	util.DoOrDie(err)
-
-	for _, pod := range pods.Items {
-		fmt.Printf("Pod name: %v\n", pod.Name)
-	}
-
-	var message string
-	if namespace == "" {
-		message = "Total Pods in all namespaces"
-	} else {
-		message = fmt.Sprintf("Total Pods in namespace `%s`", namespace)
-	}
-	fmt.Printf("%s %d\n", message, len(pods.Items))
-
-	//ListNamespaces function call returns a list of namespaces in the kubernetes cluster
-	namespaces, err := GetNamespaces(clientset)
-	util.DoOrDie(err)
-
-	for _, namespace := range namespaces.Items {
-		fmt.Println(namespace.Name)
-	}
-	fmt.Printf("Total namespaces: %d\n", len(namespaces.Items))
-}
-
 func GetPods(namespace string, client kubernetes.Interface) (*v1.PodList, error) {
 	fmt.Println("Get Kubernetes Pods")
 	pods, err := client.CoreV1().Pods(namespace).List(context.Background(), metav1.ListOptions{})
