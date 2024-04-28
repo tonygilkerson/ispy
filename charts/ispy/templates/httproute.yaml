@@ -6,9 +6,7 @@ spec:
   parentRefs:
   - name: cafe-gateway
     namespace: istio-system
-    sectionName: https
-  hostnames:
-  - "ispy.{{ .Values.domain }}"    
+    sectionName: https-ispy 
   rules:
   - backendRefs:
     - name: ispy
@@ -23,9 +21,7 @@ spec:
   parentRefs:
   - name: cafe-gateway
     namespace: istio-system
-    sectionName: http
-  hostnames:
-  - "ispy.{{ .Values.domain }}"       
+    sectionName: http-ispy     
   rules:
   - filters:
     - type: RequestRedirect
